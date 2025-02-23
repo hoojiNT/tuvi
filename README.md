@@ -1,75 +1,42 @@
-# Nuxt Minimal Starter
+# Astrology Calculator Web App
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A comprehensive web application for calculating and analyzing traditional astrological charts.
 
-## Setup
+## Description
 
-Make sure to install dependencies:
+This web application specializes in astrological calculations and interpretations based on traditional methodologies. It provides users with detailed insights into their astrological charts and readings.
 
+## Features
+
+- Birth Chart Calculation
+  - Precise calculations based on date, time, and location
+  - Detailed analysis of planetary positions
+  - House system interpretations
+
+- Personalized Analysis
+  - Comprehensive reading of astrological aspects
+  - Personality traits interpretation
+  - Life path insights
+
+- User Interface
+  - Clean and intuitive design
+  - Mobile-responsive layout
+  - Easy-to-understand results presentation
+
+## Technical Stack
+
+- Frontend:
+  - Nuxt.js 3 (Vue.js framework)
+  - Pinia (State Management)
+  - Tailwind CSS (Styling)
+- Backend: Node.js
+- Database: MongoDB
+- Authentication: JWT
+
+[repository-url]: https://github.com/hoojiNT/tuvi.git
+## Installation
+
+1. Clone the repository
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+git clone [repository-url](https://github.com/hoojiNT/tuvi.git)
 ```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

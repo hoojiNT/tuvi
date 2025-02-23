@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { chinhTinhs, diaChis, phuTinhs, thienCans } from "~/lib/const";
+import type { DiaChiEnum } from "~/lib/enum";
 import type { Cung, PersonInfo } from "~/lib/model";
 
 export const useAstrologyStore = defineStore("astrology", {
@@ -189,7 +190,9 @@ export const useAstrologyStore = defineStore("astrology", {
       const birthDate = new Date(this.personInfo.birthDate);
       const birthYear = birthDate.getFullYear();
       const namChi = this.getNamSinhChi(birthYear);
-      const gioSinhChi = this.getGioSinhChi(this.personInfo.birthTime);
+      const gioSinhChi = this.getGioSinhChi(
+        this.personInfo.birthTime
+      ) as DiaChiEnum;
 
       // Xác định vị trí năm chi trong bảng
       const namChiIndex = this.canChiData.diaChi.indexOf(namChi);
@@ -248,7 +251,9 @@ export const useAstrologyStore = defineStore("astrology", {
       // Logic tính cung Tử Vi dựa trên tháng âm lịch và giờ sinh
       // Đây là công thức đơn giản hóa, cần điều chỉnh theo sách tử vi
       let cungTuVi =
-        (lunarMonth * 2 + this.canChiData.diaChi.indexOf(gioSinh)) % 12;
+        (lunarMonth * 2 +
+          this.canChiData.diaChi.indexOf(gioSinh as DiaChiEnum)) %
+        12;
       return cungTuVi;
     },
 
@@ -267,7 +272,9 @@ export const useAstrologyStore = defineStore("astrology", {
 
     // An Thái Dương và Thái Âm
     anSaoThaiDuongThaiAm() {
-      const menhCung = this.canChiData.diaChi.indexOf(this.cungMenh);
+      const menhCung = this.canChiData.diaChi.indexOf(
+        this.cungMenh as DiaChiEnum
+      );
 
       // Thái Dương an theo mệnh
       const thaiDuongCung = (menhCung + 3) % 12;
@@ -287,7 +294,9 @@ export const useAstrologyStore = defineStore("astrology", {
 
     // An các sao Văn Xương, Văn Khúc
     anSaoVanXuongKhuc() {
-      const menhCung = this.canChiData.diaChi.indexOf(this.cungMenh);
+      const menhCung = this.canChiData.diaChi.indexOf(
+        this.cungMenh as DiaChiEnum
+      );
 
       // Văn Xương
       const vanXuongCung = (menhCung + 4) % 12;
