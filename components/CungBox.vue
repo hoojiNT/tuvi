@@ -3,7 +3,7 @@
   <div class="h-full">
     <!-- Tiêu đề cung -->
     <div class="border-b pb-2 mb-2">
-      <h3 class="font-bold text-lg">{{ cung.name }}</h3>
+      <h3 class="font-bold text-lg">{{ cung?.name ?? "Tên cung" }}</h3>
       <div class="flex gap-2">
         <span v-if="isCungMenh" class="text-red-500 text-sm">Mệnh</span>
         <span v-if="isCungThan" class="text-blue-500 text-sm">Thân</span>
@@ -14,15 +14,15 @@
     <div class="space-y-1">
       <!-- Chính tinh -->
       <div class="flex flex-wrap gap-1">
-        <span v-for="star in chinhTinh" :key="star.name" class="text-sm" :class="getStarColorClass(star)">
-          {{ star.name }}
+        <span v-for="star, i in chinhTinh" :key="i" class="text-sm" :class="getStarColorClass(star)">
+          {{ star?.name ?? "todo" }}
         </span>
       </div>
 
       <!-- Phụ tinh -->
       <div class="flex flex-wrap gap-1">
-        <span v-for="star in phuTinh" :key="star.name" class="text-sm" :class="getStarColorClass(star)">
-          {{ star.name }}
+        <span v-for="star, i in phuTinh" :key="i" class="text-sm" :class="getStarColorClass(star)">
+          {{ star?.name ?? "todo" }}
         </span>
       </div>
     </div>
@@ -48,17 +48,17 @@ const isCungThan = computed(() => props.cung?.name === store.cungThan)
 
 // Tách sao thành chính tinh và phụ tinh
 const chinhTinh = computed(() =>
-  props.cung.stars.filter(star => star.type === 'major')
+  props.cung?.stars?.filter(star => star?.type === 'major') ?? []
 )
 
 const phuTinh = computed(() =>
-  props.cung.stars.filter(star => star.type === 'minor')
+  props.cung?.stars?.filter(star => star?.type === 'minor') ?? []
 )
 
 // Hàm lấy màu sắc cho sao
 const getStarColorClass = (star) => {
-  if (star.category === 'good') return 'text-green-600'
-  if (star.category === 'bad') return 'text-red-600'
+  if (star?.category === 'good') return 'text-green-600'
+  if (star?.category === 'bad') return 'text-red-600'
   return 'text-blue-600'
 }
 </script>

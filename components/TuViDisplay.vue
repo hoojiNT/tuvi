@@ -2,51 +2,51 @@
 <template>
   <div class="max-w-6xl mx-auto p-4">
     <div class="grid grid-cols-4 gap-4">
-      <!-- Hàng 1 -->
+      <!-- Hàng 1: Tý - Sửu - Dần - Mão -->
+      <div class="border rounded p-4 bg-white shadow-sm">
+        <CungBox :cung="cungTy" />
+      </div>
+      <div class="border rounded p-4 bg-white shadow-sm">
+        <CungBox :cung="cungSuu" />
+      </div>
       <div class="border rounded p-4 bg-white shadow-sm">
         <CungBox :cung="cungDan" />
       </div>
       <div class="border rounded p-4 bg-white shadow-sm">
         <CungBox :cung="cungMao" />
       </div>
-      <div class="border rounded p-4 bg-white shadow-sm">
-        <CungBox :cung="cungThin" />
-      </div>
-      <div class="border rounded p-4 bg-white shadow-sm">
-        <CungBox :cung="cungTi" />
-      </div>
 
-      <!-- Hàng 2 -->
+      <!-- Hàng 2: Hợi - Center - Thìn -->
       <div class="border rounded p-4 bg-white shadow-sm">
-        <CungBox :cung="cungSuu" />
+        <CungBox :cung="cungHoi" />
       </div>
       <div class="col-span-2 row-span-2 border rounded p-4 bg-yellow-50 shadow-sm">
         <PersonInfo />
       </div>
       <div class="border rounded p-4 bg-white shadow-sm">
-        <CungBox :cung="cungNgo" />
+        <CungBox :cung="cungThin" />
       </div>
 
-      <!-- Hàng 3 -->
-      <div class="border rounded p-4 bg-white shadow-sm">
-        <CungBox :cung="cungTy" />
-      </div>
-      <div class="border rounded p-4 bg-white shadow-sm">
-        <CungBox :cung="cungMui" />
-      </div>
-
-      <!-- Hàng 4 -->
-      <div class="border rounded p-4 bg-white shadow-sm">
-        <CungBox :cung="cungHoi" />
-      </div>
-      <div class="border rounded p-4 bg-white shadow-sm">
-        <CungBox :cung="cungDau" />
-      </div>
+      <!-- Hàng 3: Tuất - Center - Tị -->
       <div class="border rounded p-4 bg-white shadow-sm">
         <CungBox :cung="cungTuat" />
       </div>
       <div class="border rounded p-4 bg-white shadow-sm">
+        <CungBox :cung="cungTi" />
+      </div>
+
+      <!-- Hàng 4: Dậu - Thân - Mùi - Ngọ -->
+      <div class="border rounded p-4 bg-white shadow-sm">
+        <CungBox :cung="cungDau" />
+      </div>
+      <div class="border rounded p-4 bg-white shadow-sm">
         <CungBox :cung="cungThan" />
+      </div>
+      <div class="border rounded p-4 bg-white shadow-sm">
+        <CungBox :cung="cungMui" />
+      </div>
+      <div class="border rounded p-4 bg-white shadow-sm">
+        <CungBox :cung="cungNgo" />
       </div>
     </div>
   </div>

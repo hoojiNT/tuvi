@@ -23,7 +23,7 @@ const chinhTinhs: Star[] = [
   { name: "Thất Sát", type: "major", category: "bad" },
   { name: "Phá Quân", type: "major", category: "bad" },
   { name: "Thiên Hình", type: "major", category: "bad" },
-  { name: "Thiên Riêu", type: "major", category: "bad" },
+  { name: "Thiên Diêu", type: "major", category: "good" }, //verified
   { name: "Thiên Y", type: "major", category: "good" },
   { name: "Thiên Quan", type: "major", category: "good" },
 ];

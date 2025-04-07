@@ -9,7 +9,7 @@ interface PersonInfo {
 interface Star {
   name: string;
   type: "major" | "minor" | "support"; // Chính tinh, phụ tinh, trợ tinh
-  category?: "good" | "bad" | "neutral"; // Cát tinh, hung tinh, bình hòa
+  category: "good" | "bad" | "neutral"; // Cát tinh, hung tinh, bình hòa
 }
 
 interface Cung {

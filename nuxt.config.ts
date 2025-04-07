@@ -6,7 +6,18 @@ export default defineNuxtConfig({
   modules: [
     // "@nuxt/eslint",
     "@pinia/nuxt",
+    "@primevue/nuxt-module",
   ],
+  primevue: {
+    // components: {
+    //   include: ['Button', 'InputText']
+    // },
+    // importPT: true,
+    // options: {
+    //   ripple: true
+    // },
+    // cssLayerOrder: 'tailwind-base, primevue'
+  },
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
   devServer: {
@@ -15,6 +26,11 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   vite: {
     plugins: [tailwindcss()],
+  },
+  nitro: {
+    prerender: {
+      autoSubfolderIndex: false,
+    },
   },
 
   // eslint: {
