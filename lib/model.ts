@@ -19,4 +19,6 @@ interface Cung {
   position: number; // Vị trí từ 1-12
 }
 
-export type { Cung, PersonInfo, Star };
+type LuongNghi = "Dương" | "Âm";
+
+export type { Cung, PersonInfo, Star, LuongNghi };

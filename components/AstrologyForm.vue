@@ -13,7 +13,8 @@
           <label class="block text-sm font-medium text-gray-700">
             Giới tính
           </label>
-          <Dropdown v-model="personInfo.gender" :options="genderOptions" optionLabel="label" optionValue="value" class="w-full" />
+          <Dropdown v-model="personInfo.gender" :options="genderOptions" optionLabel="label" optionValue="value"
+            class="w-full" />
         </div>
 
         <div class="field">
@@ -71,12 +72,13 @@ const personInfo = ref({
 })
 
 const handleSubmit = (e) => {
-  console.log("🚀 ~ handleSubmit ~ e:", e)
-  store.setPersonInfo({
+  // console.log("🚀 ~ handleSubmit ~ e:", e)
+  const newVal = {
     ...personInfo.value,
-    birthDate: personInfo.value.birthDate.toLocaleDateString('vi-VN'),
     birthTime: personInfo.value.birthTime.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
-  })
+  }
+  console.log("🚀 ~ handleSubmit ~ newVal:", newVal)
+  store.setPersonInfo(newVal)
   emit('submit')
 }
 </script>

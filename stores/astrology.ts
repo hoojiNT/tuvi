@@ -1,241 +1,67 @@
 import { defineStore } from "pinia";
-import { gioSinhChiMap, type DiaChiEnum } from "~/lib/enum";
+import { gioSinhChiMap, DiaChiEnum } from "~/lib/enum";
 import type { Cung, PersonInfo } from "~/lib/model";
-import { TuViLibrary } from "~/lib/tuvi.lib";
 import { ref } from "vue";
-import { diaChis, thienCans } from "~/lib/const";
+import {
+  AmDuongModule,
+  CanChiModule,
+  SaoModule,
+} from "~/lib/modules/tuvi.module";
+import dayjs from "dayjs";
 
-const cungAmDuong = {
-  Tý: "Dương",
-  Sửu: "Âm",
-  Dần: "Dương",
-  Mão: "Âm",
-  Thìn: "Dương",
-  Tị: "Âm",
-  Ngọ: "Dương",
-  Mùi: "Âm",
-  Thân: "Dương",
-  Dậu: "Âm",
-  Tuất: "Dương",
-  Hợi: "Âm",
-} as { [key: string]: "Âm" | "Dương" };
-
-// Bảng lập thành
-const lapThanh = [
-  [
-    "Tý",
-    "Sửu",
-    "Dần",
-    "Mão",
-    "Thìn",
-    "Tị",
-    "Ngọ",
-    "Mùi",
-    "Thân",
-    "Dậu",
-    "Tuất",
-    "Hợi",
-  ],
-  [
-    "Tý",
-    "Sửu",
-    "Dần",
-    "Mão",
-    "Thìn",
-    "Tị",
-    "Ngọ",
-    "Mùi",
-    "Thân",
-    "Dậu",
-    "Tuất",
-    "Hợi",
-  ],
-  [
-    "Dần",
-    "Mão",
-    "Thìn",
-    "Tị",
-    "Ngọ",
-    "Mùi",
-    "Thân",
-    "Dậu",
-    "Tuất",
-    "Hợi",
-    "Tý",
-    "Sửu",
-  ],
-  [
-    "Thìn",
-    "Tị",
-    "Ngọ",
-    "Mùi",
-    "Thân",
-    "Dậu",
-    "Tuất",
-    "Hợi",
-    "Tý",
-    "Sửu",
-    "Dần",
-    "Mão",
-  ],
-  [
-    "Ngọ",
-    "Mùi",
-    "Thân",
-    "Dậu",
-    "Tuất",
-    "Hợi",
-    "Tý",
-    "Sửu",
-    "Dần",
-    "Mão",
-    "Thìn",
-    "Tị",
-  ],
-  [
-    "Thân",
-    "Dậu",
-    "Tuất",
-    "Hợi",
-    "Tý",
-    "Sửu",
-    "Dần",
-    "Mão",
-    "Thìn",
-    "Tị",
-    "Ngọ",
-    "Mùi",
-  ],
-  [
-    "Tuất",
-    "Hợi",
-    "Tý",
-    "Sửu",
-    "Dần",
-    "Mão",
-    "Thìn",
-    "Tị",
-    "Ngọ",
-    "Mùi",
-    "Thân",
-    "Dậu",
-  ],
-];
-
-// Kiểm tra âm dương của cung
-const kiemTraAmDuong = (cung: string) => {
-  return cungAmDuong?.[cung as keyof typeof cungAmDuong] || "Dương";
+const DEFAULT_PERSON_INFO: PersonInfo = {
+  name: "",
+  gender: "male",
+  birthDate: "",
+  birthTime: "",
+  birthPlace: "",
 };
 
-const canChiData = {
-  thienCan: thienCans,
-  diaChi: diaChis,
-};
 export const useAstrologyStore = defineStore("astroloz", () => {
-  const personInfo = ref({
-    name: "",
-    gender: "male",
-    birthDate: "",
-    birthTime: "",
-    birthPlace: "",
-  } as PersonInfo);
-  const setPersonInfo  = (e: PersonInfo) =>
-    (personInfo.value = e ? e : {
-      name: "Nguyễn Văn A",
-      gender: "male",
-      birthDate: "2000-01-01",
-      birthTime: "06:00",
-      birthPlace: "Hà Nội",
-    });
-
-  const tuViLib = ref<TuViLibrary | null>(null);
-  const cungVi = ref<Cung[]>([] as Cung[]);
+  const personInfo = ref<PersonInfo>({ ...DEFAULT_PERSON_INFO });
+  const cungVi = ref<Cung[]>([]);
   const cungMenh = ref("");
   const cungThan = ref("");
 
-  const initializeTuViLib = () => {
-    tuViLib.value = new TuViLibrary(personInfo.value);
-  };
+  const setPersonInfo = (info: PersonInfo) => {
+    // Cập nhật thông tin cá nhân
+    const birthDate = dayjs(info.birthDate, 'DD/MM/YYYY').toDate();
+    console.log("🚀 ~ setPersonInfo ~ info.birthDate:", info.birthDate)
+    console.log("🚀 ~ setPersonInfo ~ birthDate:", birthDate)
+    personInfo.value = { ...info,  };
 
-  const getGioSinhChi = (): DiaChiEnum => {
-    const hour = parseInt(personInfo.value.birthTime.split(":")[0]);
-    const minute = parseInt(personInfo.value.birthTime.split(":")[1] || "0");
+    // Khởi tạo 12 cung
+    cungVi.value = Array.from({ length: 12 }, (_, index) => ({
+      name: Object.values(DiaChiEnum)[index],
+      stars: [],
+      amDuong: AmDuongModule.xacDinhAmDuong({ position: index + 1 } as Cung),
+      position: index + 1,
+    }));
 
-    for (const [timeRange, chi] of Object.entries(gioSinhChiMap)) {
-      const [start, end] = timeRange.split("-");
-      const [startHour, startMinute] = start.split(":").map(Number);
-      const [endHour, endMinute] = end.split(":").map(Number);
+    // Lấy thông tin năm sinh, tháng âm lịch và giờ sinh
+    const namSinh = birthDate.getFullYear();
+    const thangAmLich = birthDate.getMonth() + 1; // Tạm thời dùng tháng dương
+    const gioSinh = parseInt(info.birthTime.split(":")[0]);
 
-      const timeInMinutes = hour * 60 + minute;
-      const startInMinutes = startHour * 60 + startMinute;
-      const endInMinutes = endHour * 60 + endMinute;
+    // Tính cung mệnh và cung thân
+    const thienCan = CanChiModule.xacDinhThienCan(namSinh);
+    const diaChi = CanChiModule.xacDinhDiaChi(namSinh);
+    console.log("🚀 ~ setPersonInfo ~ diaChi:", diaChi);
+    cungMenh.value = `${thienCan} ${diaChi}`;
+    cungThan.value = `${thienCan} ${diaChi}`; // Tạm thời giống cung mệnh
 
-      if (timeInMinutes >= startInMinutes && timeInMinutes <= endInMinutes) {
-        return chi as DiaChiEnum;
-      }
-    }
-    return "Tý" as DiaChiEnum;
-  };
-
-  const tinhCungMenh = () => {
-    if (!tuViLib.value) return null;
-
-    const gioSinh = parseInt(personInfo.value.birthTime.split(":")[0]);
-    const birthDate = new Date(personInfo.value.birthDate);
-    const thangAmLich = birthDate.getMonth() + 1; // Tạm thời sử dụng tháng dương
-
-    const cung = tuViLib.value.tinhCungMenh(gioSinh, thangAmLich);
-    cungMenh.value = cung.name;
-    return cung;
-  };
-
-  const tinhCungThan = () => {
-    if (!tuViLib.value) return null;
-
-    const birthDate = new Date(personInfo.value.birthDate);
-    const thangAmLich = birthDate.getMonth() + 1;
-
-    const cung = tuViLib.value.getCungInfo(thangAmLich);
-    if (cung) {
-      cungThan.value = cung.name;
-    }
-    return cung;
-  };
-
-  const anTatCaSao = () => {
-    if (!tuViLib.value) return;
-
-    const gioSinh = parseInt(personInfo.value.birthTime.split(":")[0]);
-    const thangAmLich = new Date(personInfo.value.birthDate).getMonth() + 1;
-
-    tuViLib.value.anSaoTuVi(thangAmLich, gioSinh);
-    tuViLib.value.anThaiDuongThaiAm();
-    tuViLib.value.anPhuTinh();
-
-    cungVi.value = tuViLib.value.getAllCungs();
-  };
-
-  const getCungInfo = (position: number) => {
-    return tuViLib.value?.getCungInfo(position) || null;
-  };
-
-  const getAllCungs = () => {
-    return tuViLib.value?.getAllCungs() || [];
+    // An các sao
+    const cungTuVi = SaoModule.anSaoTuVi(cungVi.value, thangAmLich, gioSinh);
+    console.log("🚀 ~ setPersonInfo ~ cungTuVi:", cungTuVi);
+    SaoModule.anThaiDuongThaiAm(cungVi.value, cungTuVi);
+    SaoModule.anPhuTinh(cungVi.value, cungTuVi);
   };
 
   return {
     personInfo,
-    setPersonInfo,
-    tuViLib,
-    initializeTuViLib,
     cungVi,
     cungMenh,
     cungThan,
-    tinhCungMenh,
-    tinhCungThan,
-    anTatCaSao,
-    getCungInfo,
-    getAllCungs,
+    setPersonInfo,
   };
 });
-// Xóa store legacy vì đã được thay thế bằng useAstrologyStore mới
